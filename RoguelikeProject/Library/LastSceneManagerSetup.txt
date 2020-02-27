@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Scenes/Strat_Scene.unity
+  isLoaded: 1
+  isActive: 1

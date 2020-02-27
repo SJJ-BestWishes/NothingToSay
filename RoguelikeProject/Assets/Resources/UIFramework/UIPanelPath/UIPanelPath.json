@@ -1,0 +1,78 @@
+{
+  "uiPanelInfos": [
+    {
+      "panelTypeStr": "BeginPanel",
+      "path": "Prefabs/UIPanel/BeginPanel"
+    },
+
+    {
+      "panelTypeStr": "CgPanel",
+      "path": "Prefabs/UIPanel/CgPanel"
+    },
+
+    {
+      "panelTypeStr": "Act1StoryPanel",
+      "path": "Prefabs/UIPanel/Act1StoryPanel"
+    },
+
+    {
+      "panelTypeStr": "Act2StoryPanel",
+      "path": "Prefabs/UIPanel/Act2StoryPanel"
+    },
+
+    {
+      "panelTypeStr": "Act3StoryPanel",
+      "path": "Prefabs/UIPanel/Act3StoryPanel"
+    },
+
+    {
+      "panelTypeStr": "Act4StoryPanel",
+      "path": "Prefabs/UIPanel/Act4StoryPanel"
+    },
+
+    {
+      "panelTypeStr": "Act5StoryPanel",
+      "path": "Prefabs/UIPanel/Act5StoryPanel"
+    },
+
+    {
+      "panelTypeStr": "Act6StoryPanel",
+      "path": "Prefabs/UIPanel/Act6StoryPanel"
+    },
+
+    {
+      "panelTypeStr": "ReportActPanel",
+      "path": "Prefabs/UIPanel/ReportActPanel"
+    },
+
+    {
+      "panelTypeStr": "GamePanel",
+      "path": "Prefabs/UIPanel/GamePanel"
+    },
+
+    {
+      "panelTypeStr": "EscPanel",
+      "path": "Prefabs/UIPanel/EscPanel"
+    },
+
+    {
+      "panelTypeStr": "WinPanel",
+      "path": "Prefabs/UIPanel/WinPanel"
+    },
+
+    {
+      "panelTypeStr": "LosePanel",
+      "path": "Prefabs/UIPanel/LosePanel"
+    },
+
+    {
+      "panelTypeStr": "SaveMotherPanel",
+      "path": "Prefabs/UIPanel/SaveMotherPanel"
+    },
+
+    {
+     "panelTypeStr": "Act7FinalTalkPanel",
+     "path": "Prefabs/UIPanel/Act7FinalTalkPanel"
+    }
+  ]
+}
