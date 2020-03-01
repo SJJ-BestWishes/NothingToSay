@@ -8,19 +8,13 @@ public class Food : MonoBehaviour
     {
         Mother mother = Mother.Instance;
         Player player = Player.Instance;
-        if (mother.isADD && mother.hp >= 0)
+        if (mother.motherModel.IsADD && mother.motherModel.Hp >= 0)
         {
-            if (mother.hp + addHp > mother.maxHp)
-                mother.hp = mother.maxHp;
-            else
-                mother.hp += addHp;
+            mother.motherModel.Hp += addHp;
         }
-        if (player.hp >= 0)
+        if (player.playerModel.Hp >= 0)
         {
-            if (player.hp + addHp > player.maxHp)
-                player.hp = mother.maxHp;
-            else
-                player.hp += addHp;
+            player.playerModel.Hp += addHp;
         }
         Destroy(gameObject);
     }

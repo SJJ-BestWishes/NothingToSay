@@ -89,7 +89,9 @@
     <Compile Include="Assets\Scripts\Model\Father.cs" />
     <Compile Include="Assets\Scripts\Model\Food.cs" />
     <Compile Include="Assets\Scripts\Model\Mother.cs" />
+    <Compile Include="Assets\Scripts\Model\MotherModel.cs" />
     <Compile Include="Assets\Scripts\Model\Player.cs" />
+    <Compile Include="Assets\Scripts\Model\PlayerModel.cs" />
     <Compile Include="Assets\Scripts\Model\Wall.cs" />
     <Compile Include="Assets\Scripts\StartGame.cs" />
     <Compile Include="Assets\Scripts\UIPanel\BeginPanelView.cs" />
@@ -121,19 +123,19 @@
     <None Include="Assets\Resources\ActEdit\Act1.txt" />
     <None Include="Assets\Resources\LevelEdit\level4.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/Unity项目/RoguelikeProject/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/Unity项目/已完成开发（Git）/NothingToSay/RoguelikeProject/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>D:/Unity项目/RoguelikeProject/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>D:/Unity项目/已完成开发（Git）/NothingToSay/RoguelikeProject/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>D:/Unity项目/RoguelikeProject/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>D:/Unity项目/已完成开发（Git）/NothingToSay/RoguelikeProject/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/Unity项目/RoguelikeProject/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/Unity项目/已完成开发（Git）/NothingToSay/RoguelikeProject/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>D:/Unity项目/RoguelikeProject/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>D:/Unity项目/已完成开发（Git）/NothingToSay/RoguelikeProject/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -337,19 +339,19 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="LitJson">
-      <HintPath>D:/Unity项目/RoguelikeProject/Assets/Plug-in/LitJson.dll</HintPath>
+      <HintPath>D:/Unity项目/已完成开发（Git）/NothingToSay/RoguelikeProject/Assets/Plug-in/LitJson.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>D:/Unity项目/RoguelikeProject/Assets/Plug-in/DOTween/DOTween.dll</HintPath>
+      <HintPath>D:/Unity项目/已完成开发（Git）/NothingToSay/RoguelikeProject/Assets/Plug-in/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>D:/Unity项目/RoguelikeProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>D:/Unity项目/已完成开发（Git）/NothingToSay/RoguelikeProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>D:/Unity项目/RoguelikeProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>D:/Unity项目/已完成开发（Git）/NothingToSay/RoguelikeProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>D:/Unity项目/RoguelikeProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>D:/Unity项目/已完成开发（Git）/NothingToSay/RoguelikeProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

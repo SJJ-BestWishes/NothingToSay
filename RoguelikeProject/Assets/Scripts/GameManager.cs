@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        GameObject gamePanel = GameObject.FindGameObjectWithTag("GamePanel");
-        gamePanel.SendMessage("HpOrStateChange");
+        //GameObject gamePanel = GameObject.FindGameObjectWithTag("GamePanel");
+        //gamePanel.SendMessage("HpOrStateChange");
     }
 
     void OnLevelWasLoaded(int sceneLevel)

@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
-{
+{  
     private static Player _instance;
     public static Player Instance
     {
@@ -14,28 +15,14 @@ public class Player : MonoBehaviour
     }
     private void Awake()
     {
+        playerModel = new PlayerModel();
         _instance = this;
         //挂在此脚本的物体不会被销毁
         DontDestroyOnLoad(gameObject);
     }
 
-    public float restTime = 0.5f;
-    public float speed = 10;
-    public int attackDamage = 1;
-    public int hp = 30;
-    public int maxHp = 100;
-    public int eachStepLoseHp = 1;
-
-    //技能
-    public bool isExchangeBlood = false;
+    public PlayerModel playerModel;
     private float currentExchangeBloodTime = 0;
-    public float ExchangeBloodTime = 0.1f;
-
-    [HideInInspector] 
-    public Vector2 targetPos;
-    [HideInInspector]
-    public Vector2 oldPos;
-
     private float currentRestTime = 0;
     private new Rigidbody2D rigidbody;
     private new BoxCollider2D collider;
@@ -47,15 +34,17 @@ public class Player : MonoBehaviour
         collider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
 
-        targetPos = transform.position;
+        playerModel.targetPos = transform.position;
+        playerModel.HpEventHandler += Die;
+
     }
 
     void Update()
     {
         //if (GameManager.Instance.food <= 0 || GameManager.Instance.isEnd == true) return;
-        rigidbody.MovePosition(Vector2.Lerp(transform.position, targetPos, speed * Time.deltaTime));
+        rigidbody.MovePosition(Vector2.Lerp(transform.position, playerModel.targetPos, playerModel.speed * Time.deltaTime));
         currentRestTime += Time.deltaTime;
-        if (currentRestTime >= restTime)
+        if (currentRestTime >= playerModel.restTime)
         {
             currentRestTime = 0;
             float x = Input.GetAxisRaw("Horizontal");
@@ -70,16 +59,16 @@ public class Player : MonoBehaviour
                 //GameManager.Instance.ReduceFood(1);
                 //检测
                 collider.enabled = false;
-                RaycastHit2D hit = Physics2D.Linecast(targetPos, targetPos + new Vector2(x, y));
+                RaycastHit2D hit = Physics2D.Linecast(playerModel.targetPos, playerModel.targetPos + new Vector2(x, y));
                 collider.enabled = true;
                 if (hit.transform == null)
                 {
-                    oldPos = targetPos;
-                    targetPos += new Vector2(x, y);
+                    playerModel.oldPos = playerModel.targetPos;
+                    playerModel.targetPos += new Vector2(x, y);
                     //走路
                     AudioManager.Instance.PlayEfcMusic(AudioDic.foot_EfcMusic);
                     GameManager.Instance.OnPlayerMove();
-                    ProduceDisplacementDamage(eachStepLoseHp);
+                    ProduceDisplacementDamage(playerModel.eachStepLoseHp);
                 }
                 else
                 {
@@ -96,32 +85,31 @@ public class Player : MonoBehaviour
                         case "Food":
                         case "Soda":
                             AudioManager.Instance.PlayEfcMusic(AudioDic.eatFood_EfcMusic);
-                            hit.collider.SendMessage("TakeFood");                           
-                            oldPos = targetPos;
-                            targetPos += new Vector2(x, y);
-                            ProduceDisplacementDamage(eachStepLoseHp);
+                            hit.collider.SendMessage("TakeFood");
+                            playerModel.oldPos = playerModel.targetPos;
+                            playerModel.targetPos += new Vector2(x, y);
+                            ProduceDisplacementDamage(playerModel.eachStepLoseHp);
                             GameManager.Instance.OnPlayerMove();                            
                             break;
                         case "Enemy":
                             animator.SetTrigger("Attack");
                             //AudioManager.Instance.PlayEfcMusic(AudioDic.attack_EfcMusic);
-                            hit.collider.SendMessage("TakeDamage",attackDamage);
+                            hit.collider.SendMessage("TakeDamage",playerModel.attackDamage);
                             GameManager.Instance.OnPlayerMove();
                             break;
                         case "woman":
                             Mother mother = Mother.Instance;
-                            if (!mother.isADD)
+                            if (!mother.motherModel.IsADD)
                             {
-                                mother.isADD = true;
-                                AudioManager.Instance.PlayEfcMusic(AudioDic.help_EfcMusic);
-                                GameObject.FindGameObjectWithTag("GamePanel").SendMessage("HpOrStateChange");
-                                isExchangeBlood = true;
+                                mother.motherModel.IsADD = true;
+                                AudioManager.Instance.PlayEfcMusic(AudioDic.help_EfcMusic);                                
+                                playerModel.isExchangeBlood = true;//可以设计成加一个技能脚本
                                 UIManager.Instance.PushPanel(UIPanelType.SaveMotherPanel);
                             }
                             break;
                         case "Exit":
-                            targetPos += new Vector2(x, y);
-                            ProduceDisplacementDamage(eachStepLoseHp);
+                            playerModel.targetPos += new Vector2(x, y);
+                            ProduceDisplacementDamage(playerModel.eachStepLoseHp);
                             //Application.LoadLevel(Application.loadedLevel);
                             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                             break;
@@ -135,48 +123,51 @@ public class Player : MonoBehaviour
             }
         }
         
-        if (isExchangeBlood)
+        if (playerModel.isExchangeBlood)
         {          
             currentExchangeBloodTime += Time.deltaTime;
-            if (Input.GetKey(KeyCode.Z) && hp>=2 && Mother.Instance.hp <= Mother.Instance.maxHp && currentExchangeBloodTime>= ExchangeBloodTime)
+            if (Input.GetKey(KeyCode.Z) && playerModel.Hp >= 2 && Mother.Instance.motherModel.Hp < Mother.Instance.motherModel.maxHp && currentExchangeBloodTime>= playerModel.ExchangeBloodTime)
             {
                 currentExchangeBloodTime = 0;
-                hp--;
-                Mother.Instance.hp++;
-                GameObject.FindGameObjectWithTag("GamePanel").SendMessage("HpOrStateChange");
+                playerModel.Hp--;
+                Mother.Instance.motherModel.Hp++;
             }
-            else if (Input.GetKey(KeyCode.X) && Mother.Instance.hp >= 2 && hp <= maxHp && currentExchangeBloodTime >= ExchangeBloodTime)
+            else if (Input.GetKey(KeyCode.X) && Mother.Instance.motherModel.Hp >= 2 && playerModel.Hp < playerModel.maxHp && currentExchangeBloodTime >= playerModel.ExchangeBloodTime)
             {
                 currentExchangeBloodTime = 0;
-                hp++;
-                Mother.Instance.hp--;
-                GameObject.FindGameObjectWithTag("GamePanel").SendMessage("HpOrStateChange");
+                playerModel.Hp++;
+                Mother.Instance.motherModel.Hp--;
             }           
         }
 
         //作弊
         if (Input.GetKeyDown(KeyCode.K))
         {
-            hp = 100;
-            GamePanelView gamePanelView = GameObject.FindGameObjectWithTag("GamePanel").GetComponent<GamePanelView>();
-            if(gamePanelView)
-            {
-                gamePanelView.HpOrStateChange();
-            }
+            playerModel.Hp = 100;
         }
     }
 
     public void TakeDamage(int damage)
     {
-        hp -= damage;
+        playerModel.TakeDamage(damage);
         AudioManager.Instance.PlayEfcMusic(AudioDic.damage_EfcMusic);
         animator.SetTrigger("Damage");
-        if (hp <= 0)
-        {
-            Invoke("Die", restTime);
-        }                  
+        //if (hp <= 0)
+        //{
+        //    Invoke("Die", restTime);
+        //}                  
     }
-    private void Die()
+    private void Die(object obj ,EventArgs eventArgs)
+    {
+        PlayerModel playerModel = (PlayerModel)obj;
+        if (playerModel.Hp <= 0)
+        {
+            Invoke("ImmediDie", playerModel.restTime);
+            UIManager.Instance.PushPanel(UIPanelType.LosePanel);
+        }
+        Debug.Log("进入判断死亡方法");
+    }
+    private void ImmediDie()
     {
         //TODO
         enabled = false;
@@ -185,22 +176,16 @@ public class Player : MonoBehaviour
     //产生位移的伤害
     private void ProduceDisplacementDamage(int damage)
     {
+        playerModel.TakeDamage(damage);
         Mother mother = Mother.Instance;
-        GameObject gamePanel = GameObject.FindGameObjectWithTag("GamePanel");
-        if (mother.isADD)
+        if (mother.motherModel.IsADD)
         {
-            mother.hp-= damage;
-            mother.Move(oldPos);
+            mother.motherModel.Hp -= damage;
+            mother.Move(playerModel.oldPos);
         }
-        hp -= damage;
-        if (hp <= 0)
-        {
-            Invoke("Die", restTime);
-        }
-        if (mother.hp <= 0)
-        {
-            mother.Die();
-        }       
-        gamePanel.SendMessage("HpOrStateChange");
+        //if (mother.hp <= 0)
+        //{
+        //    mother.Die();
+        //}      
     }
 }

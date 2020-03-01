@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class Mother : MonoBehaviour
 {
-    private static Mother _instance;
     public static Mother Instance
     {
         get
@@ -11,14 +11,9 @@ public class Mother : MonoBehaviour
             return _instance;
         }
     }
+    public MotherModel motherModel;
 
-    public float speed = 10;
-    public int hp = 30;
-    public int maxHp = 100;
-    public bool isADD = false;
-    
-    [HideInInspector]
-    public Vector2 targetPos;
+    private static Mother _instance;
     private new Rigidbody2D rigidbody;
     private new BoxCollider2D collider;
     private Animator animator;
@@ -34,32 +29,38 @@ public class Mother : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
-        targetPos = transform.position;
+        motherModel.targetPos = transform.position;
+
+        motherModel.HpEventHandler += Die;
     }
 
     private void Update()
     {
-        rigidbody.MovePosition(Vector2.Lerp(transform.position, targetPos, speed * Time.deltaTime));
+        rigidbody.MovePosition(Vector2.Lerp(transform.position, motherModel.targetPos, motherModel.speed * Time.deltaTime));
     }
 
     public void Move(Vector2 oldPos)
     {
-        targetPos = oldPos;
+        motherModel.targetPos = oldPos;
     }
 
     public void TakeDamage(int damage)
     {
-        hp -= damage;
+        motherModel.TakeDamage(damage);
         AudioManager.Instance.PlayEfcMusic(AudioDic.damage_EfcMusic);
         animator.SetTrigger("motherDamage");
-        if (hp <= 0)
-        {
-            Die();
-        }
+        //if (hp <= 0)
+        //{
+        //    Die();
+        //}
     }
-    public void Die()
+    public void Die(object obj ,EventArgs eventArgs)
     {
-        Invoke("DieImmediately", Player.Instance.restTime);
+        MotherModel motherModel = (MotherModel)obj;
+        if (motherModel.Hp <= 0)
+        {
+            Invoke("DieImmediately", Player.Instance.playerModel.restTime);
+        }
     }
 
     private void DieImmediately()

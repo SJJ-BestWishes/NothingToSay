@@ -15,14 +15,14 @@ public class Father : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         player = Player.Instance;
-        speed = player.speed;
+        speed = player.playerModel.speed;
         targetPos = transform.position;
     }
     private void Update()
     {
-        if (player.targetPos.y + distance.y <= 10)
+        if (player.playerModel.targetPos.y + distance.y <= 10)
         {
-            targetPos = player.targetPos + distance;
+            targetPos = player.playerModel.targetPos + distance;
         }
         rigidbody.MovePosition(Vector2.Lerp(transform.position, targetPos, speed * Time.deltaTime));
     }

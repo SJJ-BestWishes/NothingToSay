@@ -238,7 +238,7 @@ public class MapManager : MonoBehaviour
                 player.SetActive(true);
             }
             //目标位置和当前位置都要设置
-            Player.Instance.targetPos = new Vector3(x, y, 0);
+            Player.Instance.playerModel.targetPos = new Vector3(x, y, 0);
             player.transform.position = new Vector3(x, y, 0);
         }
         //摄像机跟随
@@ -253,14 +253,14 @@ public class MapManager : MonoBehaviour
             Instantiate(mother, new Vector3(x, y, 0), Quaternion.identity);
         }
         //存在且添加了
-        else if (Mother.Instance.isADD)
+        else if (Mother.Instance.motherModel.IsADD)
         {
             GameObject mother = Mother.Instance.gameObject;
             if (!mother.activeSelf)
             {
                 mother.SetActive(true);
             }
-            Mother.Instance.targetPos = new Vector3(x, y, 0);
+            Mother.Instance.motherModel.targetPos = new Vector3(x, y, 0);
             mother.transform.position = new Vector3(x, y, 0);
         }
         //存在但是没有添加

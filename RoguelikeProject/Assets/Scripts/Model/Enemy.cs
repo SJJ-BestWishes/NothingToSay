@@ -36,9 +36,9 @@ public class Enemy : MonoBehaviour
     public void Move()
     {
         //怪物和主角的距离
-        Vector2 player_offset = player.targetPos - new Vector2(transform.position.x, transform.position.y);
+        Vector2 player_offset = player.playerModel.targetPos - new Vector2(transform.position.x, transform.position.y);
         //怪物和妈妈的距离
-        Vector2 mother_offset = mother.targetPos - new Vector2(transform.position.x, transform.position.y);
+        Vector2 mother_offset = mother.motherModel.targetPos - new Vector2(transform.position.x, transform.position.y);
         if (player_offset.magnitude < 1.1f)
         {
             //攻击
@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
             player.SendMessage("TakeDamage", attackDamage);
 
         }
-        else if (mother.isADD && mother_offset.magnitude < 1.1f)
+        else if (mother.motherModel.IsADD && mother_offset.magnitude < 1.1f)
         {
             //攻击
             animator.SetTrigger("Attack");
@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour
                     }
                 }
                 //2.人物
-                if (targetPos + move == player.targetPos || targetPos + move == mother.targetPos)
+                if (targetPos + move == player.playerModel.targetPos || targetPos + move == mother.motherModel.targetPos)
                 {
                     canGo = false;
                 }

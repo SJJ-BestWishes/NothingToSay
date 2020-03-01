@@ -74,14 +74,14 @@ public class ReportActPanelView : BasePanel
     {
         GameManager.Instance.InitGame();
         Mother.Instance.gameObject.SetActive(false);
-        Mother.Instance.isADD = false;
+        Mother.Instance.motherModel.IsADD = false;
         GetComponent<Image>().DOFade(0, fadeTime).SetEase(Ease.Linear).OnComplete(() =>
         {
             UIManager.Instance.PopPanel();
             UIManager.Instance.PushPanel(UIPanelType.GamePanel);
             GamePanelView gamePanelView = GameObject.FindGameObjectWithTag("GamePanel").GetComponent<GamePanelView>();
             gamePanelView.playerInfo.SetActive(false);        
-            Player.Instance.hp = 1000;
+            Player.Instance.playerModel.Hp = 1000;
             Player.Instance.enabled = true;
             //恢复
             GameManager.Instance.isShowEscPanel = false;
