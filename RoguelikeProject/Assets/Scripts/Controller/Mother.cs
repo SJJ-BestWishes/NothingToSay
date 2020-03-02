@@ -31,7 +31,7 @@ public class Mother : MonoBehaviour
         animator = GetComponent<Animator>();
         motherModel.targetPos = transform.position;
 
-        motherModel.HpEventHandler += Die;
+        motherModel.HpEventHandler += On_IsDie;
     }
 
     private void Update()
@@ -54,17 +54,19 @@ public class Mother : MonoBehaviour
         //    Die();
         //}
     }
-    public void Die(object obj ,EventArgs eventArgs)
+    public void On_IsDie(object obj ,EventArgs eventArgs)
     {
         MotherModel motherModel = (MotherModel)obj;
         if (motherModel.Hp <= 0)
         {
             Invoke("DieImmediately", Player.Instance.playerModel.restTime);
+            
         }
     }
 
     private void DieImmediately()
     {
-        Player.Instance.enabled = false;
+        motherModel.HpEventHandler -= On_IsDie;
+        Player.Instance.ImmediDie();
     }
 }

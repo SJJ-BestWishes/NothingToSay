@@ -22,12 +22,25 @@ public class Player : MonoBehaviour
     }
 
     public PlayerModel playerModel;
-    private float currentExchangeBloodTime = 0;
     private float currentRestTime = 0;
     private new Rigidbody2D rigidbody;
     private new BoxCollider2D collider;
     private Animator animator;
 
+    //TODO
+    private bool isFindGrandmother = false;
+    public bool IsFindGrandmother {
+        get
+        {
+            return isFindGrandmother;
+        }
+        set
+        {
+            isFindGrandmother = value;
+            IsFindGrandmotherEventHandler?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    public EventHandler IsFindGrandmotherEventHandler;
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
@@ -35,8 +48,9 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
 
         playerModel.targetPos = transform.position;
-        playerModel.HpEventHandler += Die;
-
+        playerModel.HpEventHandler += On_IsDie;
+        playerModel.IsExchangeBloodEventHandler += On_IsExchangeBlood;
+        IsFindGrandmotherEventHandler += On_IsFindGrandmother;
     }
 
     void Update()
@@ -89,12 +103,12 @@ public class Player : MonoBehaviour
                             playerModel.oldPos = playerModel.targetPos;
                             playerModel.targetPos += new Vector2(x, y);
                             ProduceDisplacementDamage(playerModel.eachStepLoseHp);
-                            GameManager.Instance.OnPlayerMove();                            
+                            GameManager.Instance.OnPlayerMove();
                             break;
                         case "Enemy":
                             animator.SetTrigger("Attack");
                             //AudioManager.Instance.PlayEfcMusic(AudioDic.attack_EfcMusic);
-                            hit.collider.SendMessage("TakeDamage",playerModel.attackDamage);
+                            hit.collider.SendMessage("TakeDamage", playerModel.attackDamage);
                             GameManager.Instance.OnPlayerMove();
                             break;
                         case "woman":
@@ -102,8 +116,8 @@ public class Player : MonoBehaviour
                             if (!mother.motherModel.IsADD)
                             {
                                 mother.motherModel.IsADD = true;
-                                AudioManager.Instance.PlayEfcMusic(AudioDic.help_EfcMusic);                                
-                                playerModel.isExchangeBlood = true;//可以设计成加一个技能脚本
+                                AudioManager.Instance.PlayEfcMusic(AudioDic.help_EfcMusic);
+                                playerModel.IsExchangeBlood = true;//可以设计成加一个技能脚本
                                 UIManager.Instance.PushPanel(UIPanelType.SaveMotherPanel);
                             }
                             break;
@@ -118,28 +132,17 @@ public class Player : MonoBehaviour
                             UIManager.Instance.PushPanel(UIPanelType.Act7FinalTalkPanel);
                             enabled = false;
                             break;
+                        case "deadpeople":
+                            if (!IsFindGrandmother)
+                            {
+                                IsFindGrandmother = true;
+                                UIManager.Instance.PushPanel(UIPanelType.FindGrandmotherPanel);
+                            }
+                            break;
                     }
                 }
             }
         }
-        
-        if (playerModel.isExchangeBlood)
-        {          
-            currentExchangeBloodTime += Time.deltaTime;
-            if (Input.GetKey(KeyCode.Z) && playerModel.Hp >= 2 && Mother.Instance.motherModel.Hp < Mother.Instance.motherModel.maxHp && currentExchangeBloodTime>= playerModel.ExchangeBloodTime)
-            {
-                currentExchangeBloodTime = 0;
-                playerModel.Hp--;
-                Mother.Instance.motherModel.Hp++;
-            }
-            else if (Input.GetKey(KeyCode.X) && Mother.Instance.motherModel.Hp >= 2 && playerModel.Hp < playerModel.maxHp && currentExchangeBloodTime >= playerModel.ExchangeBloodTime)
-            {
-                currentExchangeBloodTime = 0;
-                playerModel.Hp++;
-                Mother.Instance.motherModel.Hp--;
-            }           
-        }
-
         //作弊
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -147,6 +150,35 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void On_IsExchangeBlood(object obj,EventArgs eventArgs)
+    {
+        if (playerModel.IsExchangeBlood)
+        {
+            if (!gameObject.GetComponent<ExchangeBloodSkill>())
+                gameObject.AddComponent<ExchangeBloodSkill>();
+            else
+                gameObject.GetComponent<ExchangeBloodSkill>().enabled = true;
+        }
+        else
+        {
+            gameObject.GetComponent<ExchangeBloodSkill>().enabled = false;
+        }
+    }
+    private void On_IsFindGrandmother(object obj, EventArgs eventArgs)
+    {
+        if (IsFindGrandmother)
+        {
+            playerModel.defense += 3;
+            if (Mother.Instance)
+                Mother.Instance.motherModel.defense += 3;
+        }
+        else
+        {
+            playerModel.defense -= 3;
+            if (Mother.Instance)
+                Mother.Instance.motherModel.defense -= 3;
+        }
+    }
     public void TakeDamage(int damage)
     {
         playerModel.TakeDamage(damage);
@@ -157,26 +189,28 @@ public class Player : MonoBehaviour
         //    Invoke("Die", restTime);
         //}                  
     }
-    private void Die(object obj ,EventArgs eventArgs)
+    private void On_IsDie(object obj ,EventArgs eventArgs)
     {
         PlayerModel playerModel = (PlayerModel)obj;
         if (playerModel.Hp <= 0)
         {
-            Invoke("ImmediDie", playerModel.restTime);
-            UIManager.Instance.PushPanel(UIPanelType.LosePanel);
+            Invoke("ImmediDie", playerModel.restTime);          
         }
-        Debug.Log("进入判断死亡方法");
     }
-    private void ImmediDie()
+    public void ImmediDie()
     {
         //TODO
         enabled = false;
+        playerModel.HpEventHandler -= On_IsDie;
+        playerModel.IsExchangeBloodEventHandler -= On_IsExchangeBlood;
+        IsFindGrandmotherEventHandler -= On_IsFindGrandmother;
+        UIManager.Instance.PushPanel(UIPanelType.LosePanel);
     }
 
     //产生位移的伤害
     private void ProduceDisplacementDamage(int damage)
     {
-        playerModel.TakeDamage(damage);
+        playerModel.Hp -= damage;
         Mother mother = Mother.Instance;
         if (mother.motherModel.IsADD)
         {

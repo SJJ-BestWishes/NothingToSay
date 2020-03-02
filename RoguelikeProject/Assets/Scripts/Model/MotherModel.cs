@@ -7,6 +7,7 @@ using UnityEngine;
 public class MotherModel
 {
     public float speed = 10;
+    public int defense = 0;
     private int hp = 30;
     public int Hp
     {
@@ -49,7 +50,7 @@ public class MotherModel
 
     public void TakeDamage(int damage)
     {
-        Hp -= damage;
+        Hp -= (damage - defense);
         //AudioManager.Instance.PlayEfcMusic(AudioDic.damage_EfcMusic);
         //animator.SetTrigger("motherDamage");
         //if (hp <= 0)

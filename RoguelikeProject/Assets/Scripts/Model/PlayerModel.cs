@@ -8,8 +8,8 @@ public class PlayerModel
     public float restTime = 0.5f;
     public float speed = 10;
     public int attackDamage = 1;
-
     public int hp = 30;
+    public int defense = 0;
     public int Hp {
         get 
         {
@@ -32,7 +32,18 @@ public class PlayerModel
     public int eachStepLoseHp = 1;
 
     //技能
-    public bool isExchangeBlood = false;
+    private bool isExchangeBlood = false;
+    public bool IsExchangeBlood {
+        get
+        {
+            return isExchangeBlood;
+        }
+        set {
+            isExchangeBlood = value;
+            IsExchangeBloodEventHandler?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    public EventHandler IsExchangeBloodEventHandler;
     public float ExchangeBloodTime = 0.1f;
 
     public Vector2 targetPos;
@@ -43,7 +54,7 @@ public class PlayerModel
     }
     public void TakeDamage(int damage)
     {
-        Hp -= damage;
+        Hp -= (damage - defense);
         //AudioManager.Instance.PlayEfcMusic(AudioDic.damage_EfcMusic);
         //animator.SetTrigger("Damage");
         //if (hp <= 0)

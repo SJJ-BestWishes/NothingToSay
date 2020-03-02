@@ -71,8 +71,13 @@
     },
 
     {
-     "panelTypeStr": "Act7FinalTalkPanel",
-     "path": "Prefabs/UIPanel/Act7FinalTalkPanel"
+      "panelTypeStr": "Act7FinalTalkPanel",
+      "path": "Prefabs/UIPanel/Act7FinalTalkPanel"
+    },
+
+    {
+      "panelTypeStr": "FindGrandmotherPanel",
+      "path": "Prefabs/UIPanel/FindGrandmotherPanel"
     }
   ]
 }

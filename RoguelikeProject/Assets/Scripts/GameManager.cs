@@ -109,10 +109,10 @@ public class GameManager : MonoBehaviour
     {
         isRestart = true;
         isfail = false;
-        iswin = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        iswin = false;       
         Destroy(Player.Instance.gameObject);
         Destroy(Mother.Instance.gameObject);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         //Destroy(gameObject);
     }
     public void PauseGame()
