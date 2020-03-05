@@ -7,6 +7,7 @@ public class MapManager : MonoBehaviour
     //地形
     public GameObject[] glass_Floor;
     public GameObject[] glass_OutWall;
+    public GameObject[] glass_Water_OutWall;
     public GameObject[] glass_Wall;
 
     public GameObject[] snow_Floor;
@@ -15,6 +16,7 @@ public class MapManager : MonoBehaviour
 
     public GameObject[] walls;
     public GameObject[] exits;
+    public GameObject[] specialSnow_Wall;
     //非地形
     public GameObject player;
     public GameObject mother;
@@ -93,6 +95,10 @@ public class MapManager : MonoBehaviour
                             CreateFather(j, i, MapType.earth_Floor);
                             break;
 
+                        case MapType.Enemy_glass:
+                            CreateEnemy(j, i, MapType.glass_Floor);
+                            break;
+
                         case MapType.glass_Floor:
                             CreateFloor(j, i, glass_Floor);
                             break;
@@ -105,6 +111,9 @@ public class MapManager : MonoBehaviour
                         case MapType.glass_Exit:
                             CreateExit(j, i, exits , MapType.glass_Floor);
                             break;
+                        case MapType.glass_WaterOutWall:
+                            CreateWall(j, i, glass_Water_OutWall, MapType.glass_Floor);
+                            break;
 
                         case MapType.snow_Floor:
                             CreateFloor(j, i, snow_Floor);
@@ -114,6 +123,9 @@ public class MapManager : MonoBehaviour
                             break;
                         case MapType.snow_Wall:
                             CreateWall(j, i, snow_Wall, MapType.snow_Floor);
+                            break;
+                        case MapType.snowWall_special:
+                            CreateWall(j, i, specialSnow_Wall, MapType.snow_Floor);
                             break;
                         case MapType.snow_Exit:
                             CreateExit(j, i, exits, MapType.snow_Floor);
@@ -127,7 +139,6 @@ public class MapManager : MonoBehaviour
             Debug.Log("没有配置这一关地图");
         }
         //随机生成
-
         if (level != 7)
         {
             CreateEnemy(enemys, level);
@@ -139,12 +150,12 @@ public class MapManager : MonoBehaviour
                 case 1:
                 case 2:
                 case 3:
-                    CreateWall(glass_Wall, level);
+                    CreateWall(glass_Wall, 2*level);
                     break;
                 case 4:
                 case 5:
                 case 6:
-                    CreateWall(snow_Wall, level);
+                    CreateWall(snow_Wall, 2*level);
                     break;
             }
         }
@@ -171,16 +182,6 @@ public class MapManager : MonoBehaviour
                     map[i, j] = int.Parse(thisLine[j]);
                 }
             }
-            //检测是否读到,TODO
-            //for (int i = 0; i < line; i++)
-            //{
-            //    string vs = "";
-            //    for (int j = 0; j < columns; j++)
-            //    {
-            //        vs += map[i, j] + ",";
-            //    }
-            //    Debug.Log(vs);
-            //}
             return map;
         }
         else return null;
@@ -270,6 +271,7 @@ public class MapManager : MonoBehaviour
             if (mother.activeSelf)
             {
                 mother.SetActive(false);
+                mother.transform.position = new Vector3(x, y, 0);
             }
         }
     }
@@ -283,6 +285,11 @@ public class MapManager : MonoBehaviour
     {
         CreateBgFloor(x, y, floor_type);
         GameObject obj = Instantiate(father, new Vector3(x, y, 0), Quaternion.identity);
+    }
+    private void CreateEnemy(int x, int y, int floor_type)
+    {
+        CreateBgFloor(x, y, floor_type);
+        GameObject obj = Instantiate(enemys[0], new Vector3(x, y, 0), Quaternion.identity);
     }
 
     //随机产生的部分

@@ -18,4 +18,5 @@ public static class UIPanelType
     public const string SaveMotherPanel = "SaveMotherPanel";
     public const string Act7FinalTalkPanel = "Act7FinalTalkPanel";
     public const string FindGrandmotherPanel = "FindGrandmotherPanel";
+    public const string LoseMotherEndPanel = "LoseMotherEndPanel";
 }

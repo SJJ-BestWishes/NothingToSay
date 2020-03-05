@@ -22,6 +22,8 @@ public class MapType
     public const int father_glass = -16;
     public const int father_snow = -17;
     public const int father_earth = -18;
+    //Enemy
+    public const int Enemy_glass = -21;
     #endregion
 
     //地形
@@ -34,6 +36,7 @@ public class MapType
     public const int glass_OutWall = 2;
     public const int glass_Wall = 3;
     public const int glass_Exit = 4;
+    public const int glass_WaterOutWall = 5;
     //雪地
     /// <summary>
     /// 不碰撞
@@ -42,6 +45,8 @@ public class MapType
     public const int snow_OutWall = 7;
     public const int snow_Wall = 8;
     public const int snow_Exit = 9;
+    //特殊雪地墙面
+    public const int snowWall_special = 10;
     //泥地
     /// <summary>
     /// 不碰撞

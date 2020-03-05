@@ -78,6 +78,11 @@
     {
       "panelTypeStr": "FindGrandmotherPanel",
       "path": "Prefabs/UIPanel/FindGrandmotherPanel"
+    },
+
+    {
+      "panelTypeStr": "LoseMotherEndPanel",
+      "path": "Prefabs/UIPanel/LoseMotherEndPanel"
     }
   ]
 }

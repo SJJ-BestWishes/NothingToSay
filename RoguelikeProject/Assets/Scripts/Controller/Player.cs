@@ -27,8 +27,7 @@ public class Player : MonoBehaviour
     private new BoxCollider2D collider;
     private Animator animator;
 
-    //TODO
-    private bool isFindGrandmother = false;
+    public bool isFindGrandmother = false;
     public bool IsFindGrandmother {
         get
         {
@@ -41,6 +40,18 @@ public class Player : MonoBehaviour
         }
     }
     public EventHandler IsFindGrandmotherEventHandler;
+    private void OnEnable()
+    {
+        playerModel.HpEventHandler += On_IsDie;
+        playerModel.IsExchangeBloodEventHandler += On_IsExchangeBlood;
+        IsFindGrandmotherEventHandler += On_IsFindGrandmother;
+    }
+    private void OnDisable()
+    {
+        playerModel.HpEventHandler -= On_IsDie;
+        playerModel.IsExchangeBloodEventHandler -= On_IsExchangeBlood;
+        IsFindGrandmotherEventHandler -= On_IsFindGrandmother;
+    }
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
@@ -48,9 +59,7 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
 
         playerModel.targetPos = transform.position;
-        playerModel.HpEventHandler += On_IsDie;
-        playerModel.IsExchangeBloodEventHandler += On_IsExchangeBlood;
-        IsFindGrandmotherEventHandler += On_IsFindGrandmother;
+        
     }
 
     void Update()

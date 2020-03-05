@@ -8,7 +8,8 @@ public class PlayerModel
     public float restTime = 0.5f;
     public float speed = 10;
     public int attackDamage = 1;
-    public int hp = 30;
+    [SerializeField]
+    public int hp = 80;
     public int defense = 0;
     public int Hp {
         get 

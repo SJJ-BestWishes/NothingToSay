@@ -19,6 +19,8 @@ public class WinPanelView : BasePanel
     private Sequence sequence;
     private void Start()
     {
+        if (GameManager.Instance.level == -1)
+            path = "ActEdit/WinEnd2";
         //静止插入EscPanel
         GameManager.Instance.isShowEscPanel = true;
 

@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Controller\Food.cs" />
     <Compile Include="Assets\Scripts\Controller\Mother.cs" />
     <Compile Include="Assets\Scripts\Controller\Player.cs" />
+    <Compile Include="Assets\Scripts\Controller\SpecialWall.cs" />
     <Compile Include="Assets\Scripts\Controller\Wall.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Map\Location.cs" />
@@ -102,10 +103,12 @@
     <Compile Include="Assets\Scripts\UIPanel\EscPanelView.cs" />
     <Compile Include="Assets\Scripts\UIPanel\FindGrandmotherPanelView.cs" />
     <Compile Include="Assets\Scripts\UIPanel\GamePanelView.cs" />
+    <Compile Include="Assets\Scripts\UIPanel\LoseMotherEndPanelView.cs" />
     <Compile Include="Assets\Scripts\UIPanel\LosePanelView.cs" />
     <Compile Include="Assets\Scripts\UIPanel\ReportActPanelView.cs" />
     <Compile Include="Assets\Scripts\UIPanel\SaveMotherPanelView.cs" />
     <Compile Include="Assets\Scripts\UIPanel\WinPanelView.cs" />
+    <None Include="Assets\Resources\LevelEdit\level-1.txt" />
     <None Include="Assets\Resources\LevelEdit\level3.txt" />
     <None Include="Assets\Resources\ActEdit\ActReport.txt" />
     <None Include="Assets\Resources\LevelEdit\level7.txt" />
@@ -120,7 +123,8 @@
     <None Include="Assets\Plug-in\DOTween\readme.txt" />
     <None Include="Assets\Resources\ActEdit\Act2.txt" />
     <None Include="Assets\Resources\LevelEdit\level6.txt" />
-    <None Include="Assets\Resources\ActEdit\Win.txt" />
+    <None Include="Assets\Resources\ActEdit\WinEnd2.txt" />
+    <None Include="Assets\Resources\ActEdit\WinEnd1.txt" />
     <None Include="Assets\Resources\ActEdit\Act6.txt" />
     <None Include="Assets\Resources\ActEdit\Act1.txt" />
     <None Include="Assets\Resources\LevelEdit\level4.txt" />

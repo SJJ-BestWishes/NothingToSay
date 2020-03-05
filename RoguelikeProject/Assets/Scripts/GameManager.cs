@@ -74,26 +74,43 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.ReStart();
             level++;
             Player.Instance.enabled = false;
-            switch (level)
+            if (level <= 6)
             {
-                case 2:
-                    UIManager.Instance.PushPanel(UIPanelType.Act2StoryPanel);
-                    break;
-                case 3:
-                    UIManager.Instance.PushPanel(UIPanelType.Act3StoryPanel);
-                    break;
-                case 4:
-                    UIManager.Instance.PushPanel(UIPanelType.Act4StoryPanel);
-                    break;
-                case 5:
-                    UIManager.Instance.PushPanel(UIPanelType.Act5StoryPanel);
-                    break;
-                case 6:
-                    UIManager.Instance.PushPanel(UIPanelType.Act6StoryPanel);
-                    break;
-                case 7:
-                    UIManager.Instance.PushPanel(UIPanelType.ReportActPanel);
-                    break;
+                string ActPanelName = "Act" + level.ToString() + "StoryPanel";
+                UIManager.Instance.PushPanel(ActPanelName);
+            }
+            else
+            {
+                switch (level)
+                {
+                    //case 2:
+                    //    UIManager.Instance.PushPanel(UIPanelType.Act2StoryPanel);
+                    //    break;
+                    //case 3:
+                    //    UIManager.Instance.PushPanel(UIPanelType.Act3StoryPanel);
+                    //    break;
+                    //case 4:
+                    //    UIManager.Instance.PushPanel(UIPanelType.Act4StoryPanel);
+                    //    break;
+                    //case 5:
+                    //    UIManager.Instance.PushPanel(UIPanelType.Act5StoryPanel);
+                    //    break;
+                    //case 6:
+                    //    UIManager.Instance.PushPanel(UIPanelType.Act6StoryPanel);
+                    //    break;
+                    case 7:
+                        {
+                            if (Mother.Instance.motherModel.IsADD)
+                            {
+                                UIManager.Instance.PushPanel(UIPanelType.ReportActPanel);
+                            }
+                            else
+                            {
+                                UIManager.Instance.PushPanel(UIPanelType.LoseMotherEndPanel);
+                            }
+                            break;
+                        }
+                }
             }
         }
         else

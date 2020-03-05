@@ -8,7 +8,8 @@ public class MotherModel
 {
     public float speed = 10;
     public int defense = 0;
-    private int hp = 30;
+    [SerializeField]
+    private int hp = 80;
     public int Hp
     {
         get

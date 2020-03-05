@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 public class FindGrandmotherPanelView : BasePanel
 {
+    public Text titleText;
+    public Text mainText;
     public Button[] buttons;
     public Text[] texts;
     private void Start()
@@ -32,5 +34,10 @@ public class FindGrandmotherPanelView : BasePanel
             GameManager.Instance.ContinueGame();
             UIManager.Instance.PopPanel();
         }
+    }
+    public void ChangeShowTextMessage(string titleText, string mainText)
+    {
+        this.titleText.text = titleText;
+        this.mainText.text = mainText;
     }
 }
