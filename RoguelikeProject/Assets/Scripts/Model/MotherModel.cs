@@ -29,6 +29,7 @@ public class MotherModel
     }
     public EventHandler HpEventHandler;
     public int maxHp = 100;
+    [SerializeField]
     private bool isADD = false;
     public bool IsADD 
     {

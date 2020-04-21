@@ -6,6 +6,7 @@ public class GameRoot : MonoBehaviour
 {
     private void Start()
     {
+        ReStartGame();
         UIManager.Instance.PushPanel(UIPanelType.BeginPanel);
         /*
         * UI入口，指定显示面板

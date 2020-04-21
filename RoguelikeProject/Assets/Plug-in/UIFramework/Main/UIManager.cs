@@ -58,7 +58,7 @@ public class UIManager
     private Dictionary<string, string> panelPathDict;
     //存储所有实例化面板的Prefab的BasePanel组件
     //路径,组件
-    private Dictionary<string, BasePanel> panelDict;
+    /*private*/public Dictionary<string, BasePanel> panelDict;
 
     //储存所有面板Prefab的路径的Jason文件路径
     //第一种方法
@@ -114,6 +114,7 @@ public class UIManager
         else
             Debug.Log("没有取得面板预制件地址");
     }
+
     /// <summary>
     /// 根据面板类型得到实例化的面板,并根据对应类型加入实例化字典,Prefab需要放在Resource文件夹下面
     /// </summary>

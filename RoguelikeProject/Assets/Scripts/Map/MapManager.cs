@@ -139,14 +139,14 @@ public class MapManager : MonoBehaviour
             Debug.Log("没有配置这一关地图");
         }
         //随机生成
-        if (level != 7)
+        if (level != 7 && level !=-1)
         {
             CreateEnemy(enemys, level);
 
             CreateFood(foods, level);
-
             switch (level)
             {
+               
                 case 1:
                 case 2:
                 case 3:
@@ -271,8 +271,8 @@ public class MapManager : MonoBehaviour
             if (mother.activeSelf)
             {
                 mother.SetActive(false);
-                mother.transform.position = new Vector3(x, y, 0);
             }
+            mother.transform.position = new Vector3(x, y, 0);
         }
     }
 
